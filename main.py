@@ -1,19 +1,17 @@
 from bokeh.plotting import figure, output_file, show
 
+# prepare some data
 x = [1, 2, 3, 4, 5]
-y = [4, 6, 2, 4, 3]
+y = [6, 7, 2, 4, 5]
 
-ouput_file('index.html')
+# output to static HTML file
+output_file("lines.html", title="line plot example")
 
-# Add plot
-p = figure(
-    title='Simple Example',
-    x_axis_label='X Axis',
-    y_axis_label='Y Axis'
-)
+# create a new plot with a title and axis labels
+p = figure(title="simple line example", x_axis_label='x', y_axis_label='y')
 
-# Render glyphs
-p.line(x, y, legend='Test', line_width=2)
+# add a line renderer with legend and line thickness
+p.line(x, y, legend="Temp.", line_width=2)
 
-# Show results
+# show the results
 show(p)
