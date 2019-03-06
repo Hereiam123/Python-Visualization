@@ -1,22 +1,25 @@
-from bokeh.plotting import figure, output_file, show
+from bokeh.plotting import figure, output_file, show, ColumnDataSource
 import pandas
 
 # Read in csv
 df = pandas.read_csv('cars.csv')
 
-car = df['Car']
-hp = df['Horsepower']
+# Create ColumnDataSource from data frame
+source = ColumnDataSource(df)
 
 # output to static HTML file
 output_file("lines.html", title="line plot example")
 
+# Car list
+car_list = source.data['Car'].tolist()
+
 # create a new plot with a title and axis labels
-p = figure(y_range=car, plot_width=800, plot_height=600, title="Cars with Top Horsepower",
-           x_axis_label='Horsepower', tools="")
+p = figure(y_range=car_list, plot_width=800, plot_height=600, title="Cars with Top Horsepower",
+           x_axis_label='Horsepower', tools="pan, box_select, zoom_in, zoom_out, save, reset")
 
 # add a line renderer with legend and line thickness
 p.hbar(
-    y=car, right=hp, left=0, height=0.4, color='orange', fill_alpha=0.5
+    y="Car", right="Horsepower", left=0, height=0.4, color='orange', fill_alpha=0.5, source=source
 )
 
 # show the results
