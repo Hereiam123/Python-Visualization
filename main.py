@@ -1,4 +1,5 @@
-from bokeh.plotting import figure, output_file, show, ColumnDataSource
+from bokeh.plotting import figure, output_file, show, ColumnDataSource, save
+from bokeh.models.tools import HoverTool
 import pandas
 
 # Read in csv
@@ -22,5 +23,19 @@ p.hbar(
     y="Car", right="Horsepower", left=0, height=0.4, color='orange', fill_alpha=0.5, source=source
 )
 
+# Add Tooltips
+hover = HoverTool()
+hover.tooltips = """
+    <div>
+    <h3>@Car</h3>
+        <div><strong>Price: </strong>@Price</div>
+        <div><strong>HP: </strong>@Horsepower</div>
+        <div><img src="@Image" alt="" width="200"/></div>
+    </div>
+"""
+p.add_tools(hover)
 # show the results
-show(p)
+# show(p)
+
+# Save file
+save(p)
